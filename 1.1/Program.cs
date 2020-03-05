@@ -1,12 +1,11 @@
 ﻿using System;
 
-namespace CSharpHomeWork
+namespace _1._1
 {
     class Program
     {
         static void Main(string[] args)
         {
-
             int num1 = 0; int num2 = 0;
             Console.WriteLine("Console Calculator in C#\r");
             Console.WriteLine("------------------------\n");
@@ -47,4 +46,3 @@ namespace CSharpHomeWork
         }
     }
 }
-
