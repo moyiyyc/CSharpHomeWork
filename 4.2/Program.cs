@@ -29,7 +29,7 @@ namespace _4._2
                     i++;
                     if (i % 10 == 0)
                     {
-                        Console.WriteLine("响铃!!!");
+                        Console.WriteLine("响铃!!!");//十秒一次
                     }
                 }
                 
