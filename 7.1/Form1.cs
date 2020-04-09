@@ -19,70 +19,28 @@ namespace _7._1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-           
-        }
-         private Graphics graphics;
-        int n;
-        double leng;
-        double th1 = 30 * Math.PI / 180;
-        double th2 = 20 * Math.PI / 180;
-        double per1 = 0.6;
-        double per2 = 0.7;
-        Pen pen;
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            this. n = int.Parse(Text);
-        }
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-            leng=int.Parse(Text);
-        }
+            Deg1 = 30; Deg2 = 20; Per1 = 0.6; Per2 = 0.7; Leng= 100; N = 100;
+            pen.Color= Color. Red;
+            textBox1.DataBindings.Add("Text", this, "N",false, DataSourceUpdateMode.OnPropertyChanged);
+            textBox7.DataBindings.Add("Text", this, "Leng", false, DataSourceUpdateMode.OnPropertyChanged);
+            textBox8.DataBindings.Add("Text", this, "Per2", false, DataSourceUpdateMode.OnPropertyChanged);
+            textBox9.DataBindings.Add("Text", this, "Per1", false, DataSourceUpdateMode.OnPropertyChanged);
+            textBox10.DataBindings.Add("Text", this, "Deg2", false, DataSourceUpdateMode.OnPropertyChanged);
+            textBox11.DataBindings.Add("Text", this, "Deg1", false, DataSourceUpdateMode.OnPropertyChanged);
 
-        private void textBox3_TextChanged(object sender, EventArgs e)
-        {
-             per1 = double.Parse(Text);
         }
-
-        private void textBox4_TextChanged(object sender, EventArgs e)
-        {
-             per2 = double.Parse(Text);
-        }
-
-        private void textBox5_TextChanged(object sender, EventArgs e)
-        {
-             th1 = double.Parse(Text);
-        }
-
-        private void textBox6_TextChanged(object sender, EventArgs e)
-        {
-             th2 = double.Parse(Text);
-        }
-
-        private void textBox7_TextChanged(object sender, EventArgs e)
-        {
-            switch (Text)
-            {
-                case "black":
-                    pen.Color = Color.Black;
-                    break;
-                case "red":
-                    pen.Color = Color.Red;
-                    break;
+        private Graphics graphics;
+        public int N { get; set; }
+        public double Leng { get; set; }
+        public int Deg1 { get; set; }
+        public int Deg2 { get; set; }
+        public double Per1 { get; set; }
+        public double Per2 { get; set; }
+        public  Pen pen;
+       
 
 
-                default:
-                    pen.Color = Color.Black;
-                    break;
-            }
-            
-        }
-        
 
-        void drawLine(double x0, double y0, double x1, double y1)
-        {
-            graphics.DrawLine(pen,
-                (int)x0, (int)y0, (int)x1, (int)y1) ;
-        }
 
         void drawCayleyTree(int n, double x0, double y0, double leng, double th)
         {
@@ -90,20 +48,42 @@ namespace _7._1
             double x1 = x0 + leng * Math.Cos(th);
             double y1 = y0 + leng * Math.Sin(th);
 
-            drawLine(x0, y0, x1, y1);
-
-            drawCayleyTree(n - 1, x1, y1, per1 * leng, th + th1);
-            drawCayleyTree(n - 1, x1, y1, per2 * leng, th - th2);
+            graphics.DrawLine(pen,
+                (int)x0, (int)y0, (int)x1, (int)y1);
+         
+            drawCayleyTree(n - 1, x1, y1, Per1 * leng, th + Deg1 * Math.PI / 180);
+            drawCayleyTree(n - 1, x1, y1, Per2 * leng, th - Deg2 * Math.PI / 180);
 
 
         }
-        private void button1_Click(object sender, EventArgs e)
+        
+
+        private void button2_Click(object sender, EventArgs e)
         {
-            if (graphics == null) graphics = this.CreateGraphics();
-            drawCayleyTree(n, 200, 310, 100, -Math.PI / 2);
+           
+                //显示颜色对话框
+                DialogResult dr = colorDialog1.ShowDialog();
+                //如果选中颜色，单击“确定”按钮则改变文本框的文本颜色
+                if (dr == DialogResult.OK)
+                {
+               
+                pen.Color= colorDialog1.Color;
+                }
+            
         }
 
-       
+        private void button3_Click(object sender, EventArgs e)
+        {
+            graphics = this.panel1.CreateGraphics();
+            graphics.Clear(panel1.BackColor);
+            if (graphics == null) graphics = this.CreateGraphics();
+            drawCayleyTree(this.N, panel1.Width / 2, panel1.Height - 20, this.Leng, -Math.PI / 2);
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
    
 }
