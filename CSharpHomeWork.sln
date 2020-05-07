@@ -29,7 +29,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "8", "8\8.csproj", "{0F568EF
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "9", "9\CrawlerForm\9.csproj", "{4B0FF300-4947-468F-9334-D42C3E496A4E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10", "ParallelCrawler\CrawlerForm\10.csproj", "{B0FF2556-3975-4070-8544-C93F092EEEA3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "10", "10\CrawlerForm\10.csproj", "{B0FF2556-3975-4070-8544-C93F092EEEA3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
