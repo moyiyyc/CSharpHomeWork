@@ -10,8 +10,8 @@ namespace Orderapi
 {
     public class OrderItem
     {
-        private double _amount;
-        private double _price;
+        private double orderamount;
+        private double orderprice;
 
         public string OrderId { get; set; }
         [Required]
@@ -20,16 +20,16 @@ namespace Orderapi
         [Required]
         public double Price
         {
-            get => _price;
+            get => orderprice;
             set
             {
                 if (value > 0)
                 {
-                    _price = value;
+                    orderprice = value;
                 }
                 else
                 {
-                    throw new InvalidDataException("Price can't be negative");
+                    throw new InvalidDataException("价格不能为负");
                 }
             }
         }
@@ -37,16 +37,16 @@ namespace Orderapi
         [Required]
         public double Amount
         {
-            get => _amount;
+            get => orderamount;
             set
             {
                 if (value > 0)
                 {
-                    _amount = value;
+                    orderamount = value;
                 }
                 else
                 {
-                    throw new InvalidDataException("Amount can't be negative");
+                    throw new InvalidDataException("总数不可为负");
                 }
             }
         }
