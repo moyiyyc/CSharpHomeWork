@@ -12,13 +12,13 @@ namespace Orderapi.Controllers
     public class OrderController : ControllerBase
     {
 
-        private readonly ILogger<OrderController> _logger;
-        private readonly OrderContext _db;
+        private readonly ILogger<OrderController> orderlogger;
+        private readonly OrderContext orderDb;
 
         public OrderController(ILogger<OrderController> logger, OrderContext db)
         {
-            _logger = logger;
-            _db = db;
+            orderlogger = logger;
+            orderDb = db;
         }
 
         // POST: api/order/create
@@ -29,9 +29,9 @@ namespace Orderapi.Controllers
             {
                 order.Id = Order.genID();
                 order.Items.ForEach(item => item.OrderId = order.Id);
-                await _db.Orders.AddAsync(order);
-                await _db.OrderItems.AddRangeAsync(order.Items);
-                await _db.SaveChangesAsync();
+                await orderDb.Orders.AddAsync(order);
+                await orderDb.OrderItems.AddRangeAsync(order.Items);
+                await orderDb.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -45,15 +45,15 @@ namespace Orderapi.Controllers
         [HttpDelete("delete/{id}")]
         public ActionResult DeleteOrder(string id)
         {
-            var order = _db.Orders.Find(id);
+            var order = orderDb.Orders.Find(id);
             if (order == null)
             {
                 return NotFound();
             }
-            order.Items = _db.OrderItems.Where(item => item.OrderId == order.Id).ToList();
-            _db.OrderItems.RemoveRange(order.Items);
-            _db.Orders.Remove(order);
-            _db.SaveChanges();
+            order.Items = orderDb.OrderItems.Where(item => item.OrderId == order.Id).ToList();
+            orderDb.OrderItems.RemoveRange(order.Items);
+            orderDb.Orders.Remove(order);
+            orderDb.SaveChanges();
             return Ok();
         }
 
@@ -68,19 +68,19 @@ namespace Orderapi.Controllers
 
             try
             {
-                var current = _db.Orders.Find(order.Id);
+                var current = orderDb.Orders.Find(order.Id);
                 if (current == null)
                 {
                     return NotFound();
                 }
-                current.Items = _db.OrderItems.Where(item => item.OrderId == current.Id).ToList();
-                _db.OrderItems.RemoveRange(current.Items);
-                _db.Orders.Remove(current);
-                _db.SaveChanges();
+                current.Items = orderDb.OrderItems.Where(item => item.OrderId == current.Id).ToList();
+                orderDb.OrderItems.RemoveRange(current.Items);
+                orderDb.Orders.Remove(current);
+                orderDb.SaveChanges();
                 order.Items.ForEach(item => item.OrderId = order.Id);
-                await _db.Orders.AddAsync(order);
-                await _db.OrderItems.AddRangeAsync(order.Items);
-                await _db.SaveChangesAsync();
+                await orderDb.Orders.AddAsync(order);
+                await orderDb.OrderItems.AddRangeAsync(order.Items);
+                await orderDb.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -93,7 +93,7 @@ namespace Orderapi.Controllers
         [HttpGet("find")]
         public ActionResult<List<Order>> FindOrders(string query)
         {
-            IEnumerable<Order> e = _db.Orders;
+            IEnumerable<Order> e = orderDb.Orders;
 
             foreach (var term in query.Split(',').AsEnumerable().Select(x => x.Split(':')))
             {
@@ -159,7 +159,7 @@ namespace Orderapi.Controllers
             }
 
             var result = e.ToList();
-            result.ForEach(order => order.Items = _db.OrderItems.Where(item => item.OrderId == order.Id).ToList());
+            result.ForEach(order => order.Items = orderDb.OrderItems.Where(item => item.OrderId == order.Id).ToList());
             return result;
         }
 
